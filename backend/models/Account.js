@@ -16,9 +16,9 @@ const accountSchema = new Schema({
   address:{
     type:String
   },
-  isAdmin: {
+  role: {
     type:String,
-    default:false
+    default:'USER_ROLE'
   },
   status:{
     type:Number,

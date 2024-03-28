@@ -1,7 +1,7 @@
 const Account = require('../models/Account')
 const {encode,decode} = require('../utils/crypto')
 const HTTP_STATUS = require('../enums/httpStatus')
-const  {generateToken} = require('../utils/jwt')
+const  {generateToken} = require('../utils/generateToken')
 module.exports = {
     login:async(data)=>{
         
@@ -26,8 +26,8 @@ module.exports = {
                     data:null
                 }
             }
-            const {password,_id,...dataResponse} = accountExist._doc; 
-            const accessToken = generateToken({email:data.email,_id})
+            const {password,_id,role,...dataResponse} = accountExist._doc; 
+            const accessToken = generateToken({email:data.email,_id,role})
 
             dataResponse.accessToken = accessToken;
 
@@ -57,12 +57,12 @@ module.exports = {
             data.password = encodePass; 
             const accountData = new Account(data); 
             const account = await accountData.save(); 
-            const {_id,password,...dataResponse} = account._doc; 
-            const accessToken = generateToken({email:data.email,_id})
+            const {_id,password,role,...dataResponse} = account._doc; 
+            const accessToken = generateToken({email:data.email,_id,role})
             dataResponse.accessToken = accessToken; 
 
             return {
-                statusCode:HTTP_STATUS.BAD_REQUEST,
+                statusCode:HTTP_STATUS.CREATED,
                 success:true,
                 message:'Đăng ký tài khoản thành công',
                 data:dataResponse

@@ -5,9 +5,8 @@ const app = express();
 app.use(express.json());
 connect();
 
-const {authRouter,productRouter,categoryRouter,orderRouter} = require('../backend/routers')
-
-app.use(authRouter,productRouter,categoryRouter,orderRouter)
+const {authRouter,productRouter,categoryRouter,orderRouter,commentRouter} = require('../backend/routers')
+app.use(authRouter,productRouter,categoryRouter,orderRouter,commentRouter)
 
 app.listen(process.env.PORT || 7000, () =>
   console.log(`server is running at http://localhost:${process.env.PORT}`)
